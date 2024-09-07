@@ -1,23 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import {
-  fetchUsers,
-  setFilters,
-  toggleSort,
-  UserType,
-} from "../state/user/userSlice";
+import { useEffect } from "react";
+import { fetchUsers, setFilters, toggleSort } from "../state/user/userSlice";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 const UserManagement = () => {
   const userState = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
-
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [sort, setSort] = useState<"nameDesc" | "nameAsc">("nameDesc");
 
   useEffect(() => {
     dispatch(
