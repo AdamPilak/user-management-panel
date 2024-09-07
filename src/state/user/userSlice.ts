@@ -30,81 +30,118 @@ interface Company {
   bs: string;
 }
 
-interface UsersState {
-  loading: boolean;
-  users: UserType[];
-  error: string;
-}
-
-const initialState: UsersState = {
-  loading: false,
-  users: [],
-  error: "",
-};
-
 export type UserFilters = {
   name?: string;
   username?: string;
   email?: string;
   phone?: string;
-  sort?: "nameDesc" | "nameAsc" | undefined;
+};
+
+interface UserState {
+  loading: boolean;
+  users: UserType[];
+  error: string;
+  filters: UserFilters;
+  sort: "nameDesc" | "nameAsc";
+}
+
+const initialState: UserState = {
+  loading: false,
+  users: [],
+  error: "",
+  filters: {
+    name: "",
+    username: "",
+    email: "",
+    phone: "",
+  },
+  sort: "nameDesc",
 };
 
 export const fetchUsers = createAsyncThunk(
   "user/fetchUsers",
-  async (options?: UserFilters) => {
+  async (filters: UserFilters) => {
     const users: UserType[] = await fetch(
       "https://jsonplaceholder.typicode.com/users"
     ).then((response) => response.json());
 
-    let filteredUsers = users;
-
-    if (options?.name) {
-      filteredUsers = filteredUsers.filter((user) => {
-        return user.name.toLowerCase().includes(options.name!.toLowerCase());
-      });
-    }
-
-    if (options?.username) {
-      filteredUsers = filteredUsers.filter((user) => {
-        return user.username
-          .toLowerCase()
-          .includes(options.username!.toLowerCase());
-      });
-    }
-
-    if (options?.email) {
-      filteredUsers = filteredUsers.filter((user) => {
-        return user.email.toLowerCase().includes(options.email!.toLowerCase());
-      });
-    }
-
-    if (options?.phone) {
-      filteredUsers = filteredUsers.filter((user) => {
-        return user.phone.toLowerCase().includes(options.phone!.toLowerCase());
-      });
-    }
+    const filteredUsers = filterUsers(users, filters);
 
     return filteredUsers;
   }
 );
 
-const sortUsers = (sort: string, users: UserType[]) => {
-  let sortedUsers = [];
+const filterUsers = (users: UserType[], filters: UserFilters) => {
+  let filteredUsers = users;
 
-  switch (sort) {
-    case "nameDsc": {
-      sortedUsers = users.sort((a, b) => (a.name > b.name ? 1 : -1));
-    }
+  if (filters.name) {
+    filteredUsers = filteredUsers.filter((user) => {
+      return user.name.toLowerCase().includes(filters.name!.toLowerCase());
+    });
   }
 
-  return sortUsers;
+  if (filters.username) {
+    users = users.filter((user) => {
+      return user.username
+        .toLowerCase()
+        .includes(filters.username!.toLowerCase());
+    });
+  }
+
+  if (filters.email) {
+    filteredUsers = filteredUsers.filter((user) => {
+      return user.email.toLowerCase().includes(filters.email!.toLowerCase());
+    });
+  }
+
+  if (filters.phone) {
+    filteredUsers = filteredUsers.filter((user) => {
+      return user.phone.toLowerCase().includes(filters.phone!.toLowerCase());
+    });
+  }
+
+  return filteredUsers;
+};
+
+const sortUsers = (state: UserState) => {
+  if (state.sort === "nameDesc") {
+    state.users.sort((a, b) => (a.name > b.name ? 1 : -1));
+  } else {
+    state.users.sort((a, b) => (a.name < b.name ? 1 : -1));
+  }
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    toggleSort: (state) => {
+      state.sort === "nameDesc"
+        ? (state.sort = "nameAsc")
+        : (state.sort = "nameDesc");
+
+      sortUsers(state);
+    },
+    setFilters: (
+      state,
+      action: PayloadAction<{ label: string; value: string }>
+    ) => {
+      switch (action.payload.label) {
+        case "name":
+          state.filters.name = action.payload.value;
+          break;
+        case "username":
+          state.filters.username = action.payload.value;
+          break;
+        case "email":
+          state.filters.email = action.payload.value;
+          break;
+        case "phone":
+          state.filters.phone = action.payload.value;
+          break;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -113,6 +150,7 @@ const userSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
         state.users = action.payload;
+        sortUsers(state);
         state.error = "";
       })
       .addCase(fetchUsers.rejected, (state, action) => {
@@ -122,5 +160,7 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const { toggleSort, setFilters } = userSlice.actions;
 
 export default userSlice.reducer;

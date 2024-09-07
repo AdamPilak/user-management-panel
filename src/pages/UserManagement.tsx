@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { fetchUsers, UserType } from "../state/user/userSlice";
+import {
+  fetchUsers,
+  setFilters,
+  toggleSort,
+  UserType,
+} from "../state/user/userSlice";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 const UserManagement = () => {
@@ -12,30 +17,22 @@ const UserManagement = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [sort, setSort] = useState<"nameDesc" | "nameAsc" | undefined>(
-    "nameDesc"
-  );
+  const [sort, setSort] = useState<"nameDesc" | "nameAsc">("nameDesc");
 
   useEffect(() => {
-    dispatch(fetchUsers({ name, username, email, phone, sort }));
-  }, [name, username, email, phone, sort]);
+    dispatch(
+      fetchUsers({
+        name: userState.filters.name,
+        username: userState.filters.username,
+        email: userState.filters.email,
+        phone: userState.filters.phone,
+      })
+    );
+  }, [userState.filters]);
 
-  const sortUsers = () => {
-    let sortedUsers: UserType[] = [...userState.users];
-
-    sort === "nameDesc"
-      ? sortedUsers.sort((a, b) => (a.name > b.name ? 1 : -1))
-      : sortedUsers.sort((a, b) => (a.name < b.name ? 1 : -1));
-
-    return sortedUsers;
-  };
-
-  const debounceFilter = (
-    setValue: Dispatch<SetStateAction<string>>,
-    value: string
-  ) => {
+  const debounceFilter = (label: string, value: string) => {
     const timeout = setTimeout(() => {
-      setValue(value);
+      dispatch(setFilters({ label, value }));
       clearTimeout(timeout);
     }, 300);
   };
@@ -55,47 +52,45 @@ const UserManagement = () => {
               </tr>
               <tr>
                 <td scope="col">
-                  <button
-                    onClick={() => {
-                      sort == "nameDesc"
-                        ? setSort("nameAsc")
-                        : setSort("nameDesc");
-                    }}
-                  >
-                    {sort === "nameDesc" ? <ArrowDown /> : <ArrowUp />}
+                  <button onClick={() => dispatch(toggleSort())}>
+                    {userState.sort === "nameDesc" ? (
+                      <ArrowDown />
+                    ) : (
+                      <ArrowUp />
+                    )}
                   </button>
                   <input
                     type="text"
                     placeholder="Search by Name"
-                    onChange={(e) => debounceFilter(setName, e.target.value)}
+                    onChange={(e) => debounceFilter("name", e.target.value)}
                   />
                 </td>
                 <td scope="col">
                   <input
                     type="text"
                     placeholder="Search by Username"
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => debounceFilter("username", e.target.value)}
                   />
                 </td>
                 <td scope="col">
                   <input
                     type="text"
                     placeholder="Search by Email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => debounceFilter("email", e.target.value)}
                   />
                 </td>
                 <td scope="col">
                   <input
                     type="text"
                     placeholder="Search by Phone"
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => debounceFilter("phone", e.target.value)}
                   />
                 </td>
               </tr>
             </thead>
             <tbody>
               {userState.users.length !== 0 ? (
-                sortUsers().map((user) => (
+                userState.users.map((user) => (
                   <tr>
                     <td>{user.name}</td>
                     <td>{user.username}</td>
