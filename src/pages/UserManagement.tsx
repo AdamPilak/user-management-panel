@@ -36,9 +36,8 @@ const UserManagement = () => {
               <thead>
                 <tr>
                   <td scope="col">
-                    Name
                     <div>
-                      {userState.loading && <LoaderCircle />}
+                      Name{" "}
                       <button onClick={() => dispatch(toggleSort())}>
                         {userState.sort === "nameDesc" ? (
                           <ArrowDown />
@@ -47,6 +46,7 @@ const UserManagement = () => {
                         )}
                       </button>
                     </div>
+                    {userState.loading && <LoaderCircle />}
                   </td>
                   <td scope="col">Username</td>
                   <td scope="col">Email</td>

@@ -33,6 +33,10 @@ section h2 {
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
+section .content {
+  padding: 1.5rem 3rem 3rem 3rem;
+}
+
 /* Navigation */
 nav {
   position: relative;
@@ -58,6 +62,10 @@ nav .logo {
   font-size: 1.25rem;
   font-weight: 600;
   color: white;
+}
+
+.desktop.nav {
+  max-width: 240px;
 }
 
 .desktop-nav .logo {
@@ -133,25 +141,24 @@ main {
   width: 100%;
 }
 
+/* Home */
+.home h1 {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 200%;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
 /* User Management */
-.user-management {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-bottom: 2rem;
-}
-
-.user-management .content {
-  padding: 1rem 3rem;
-}
-
 .user-management .table-wrapper {
   overflow: auto;
   padding: 0.25rem;
 }
 
 .user-management table {
-  overflow: hidden;
   width: 100%;
   border-spacing: 0;
   border: 1px solid #d7d9de;
@@ -170,13 +177,13 @@ main {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .user-management thead tr:first-child td:first-child div {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .user-management thead tr:first-child td:first-child .lucide-loader-circle {
@@ -237,6 +244,10 @@ main {
     font-size: 1.25rem;
   }
 
+  section .content {
+    padding: 1rem 1.5rem 2rem 1.5rem;
+  }
+
   /* Navigation */
   nav header {
     height: 5rem;
@@ -247,6 +258,8 @@ main {
   }
 
   .mobile-nav {
+    position: sticky;
+    top: 0;
     display: flex;
   }
 
@@ -263,9 +276,9 @@ main {
     transform: translateY(0);
   }
 
-  /* User Management */
-  .user-management .content {
-    padding: 0 1.5rem;
+  /* Home */
+  .home h1 {
+    font-size: 1.25rem;
   }
 }
 
