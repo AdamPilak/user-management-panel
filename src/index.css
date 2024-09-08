@@ -19,7 +19,6 @@ html {
   display: flex;
   min-height: 100dvh;
   background-color: #f2f3f5;
-  overflow-x: hidden;
 }
 
 /* Sections */
