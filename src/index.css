@@ -160,6 +160,7 @@ main {
 
 .user-management table {
   width: 100%;
+  overflow: hidden;
   border-spacing: 0;
   border: 1px solid #d7d9de;
   border-radius: 0.5rem;
