@@ -152,14 +152,12 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        console.log("fulfilled");
         state.loading = false;
         state.users = action.payload;
         sortUsers(state);
         state.error = "";
       })
       .addCase(fetchUsers.rejected, (state, action) => {
-        console.log("rejected");
         state.loading = false;
         state.users = [];
         state.error = action.error.message || "Something went wrong";
