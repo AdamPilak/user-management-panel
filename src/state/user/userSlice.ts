@@ -85,7 +85,7 @@ const filterUsers = (users: UserType[], filters: UserFilters) => {
   }
 
   if (filters.username) {
-    users = users.filter((user) => {
+    filteredUsers = filteredUsers.filter((user) => {
       return user.username
         .toLowerCase()
         .includes(filters.username!.toLowerCase());

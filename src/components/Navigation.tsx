@@ -15,9 +15,9 @@ const Navigation = ({ className, expaneded, type }: Props) => {
   return (
     <nav className={`${className} ${isExpanded ? "expanded" : ""}`}>
       <header>
-        <a href="" className="logo">
+        <Link to="/" className="logo">
           SMART
-        </a>
+        </Link>
         <button
           className="expand-collapse-btn"
           onClick={() => setIsExpanded((prev) => !prev)}
