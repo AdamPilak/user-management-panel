@@ -10,7 +10,6 @@
 }
 
 html {
-  /* font-family: "SUSE", sans-serif; */
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
 }
@@ -18,8 +17,8 @@ html {
 #root {
   position: relative;
   display: flex;
-  height: 100dvh;
-  overflow: hidden;
+  min-height: 100dvh;
+  background-color: #f2f3f5;
 }
 
 nav {
@@ -87,7 +86,8 @@ nav .nav-link {
   white-space: nowrap;
 }
 
-nav .nav-link:hover {
+nav .nav-link:hover,
+nav .nav-link.selected {
   background: rgb(6, 0, 46);
   background: radial-gradient(
     circle,
@@ -97,7 +97,8 @@ nav .nav-link:hover {
   font-weight: 500;
 }
 
-nav .nav-link:hover::before {
+nav .nav-link:hover::before,
+nav .nav-link.selected::before {
   content: "";
   position: absolute;
   top: 0;
@@ -116,15 +117,14 @@ nav .nav-link:hover::before {
 }
 
 main {
-  height: 100%;
   width: 100%;
-  background-color: #f2f3f5;
 }
 
 .user-management {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  padding-bottom: 2rem;
 }
 
 .user-management h2 {
@@ -139,7 +139,12 @@ main {
 }
 
 .user-management .content {
-  padding: 0rem 3rem;
+  padding: 1rem 3rem;
+}
+
+.user-management .table-wrapper {
+  overflow: auto;
+  padding: 0.25rem;
 }
 
 .user-management table {
@@ -156,16 +161,17 @@ main {
   padding: 1rem 1.5rem;
 }
 
+.user-management thead tr:first-child td:first-child {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
 .user-management thead td {
   font-weight: 500;
   background-color: #eceef2;
   border-bottom: 1px solid #d7d9de;
-}
-
-.user-management thead tr:last-child td:first-child {
-  display: flex;
-  width: 100%;
-  gap: 1rem;
 }
 
 .user-management thead input {
@@ -196,9 +202,19 @@ main {
   background: #f9fafc;
 }
 
+@media (max-width: 1200px) {
+  .user-management td {
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 992px) {
   #root {
     flex-direction: column;
+  }
+
+  nav header {
+    height: 5rem;
   }
 
   .desktop-nav {
@@ -212,7 +228,7 @@ main {
   .mobile-nav .nav-links {
     position: absolute;
     top: 100%;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     background: rgba(6, 0, 46, 1) 30%;
     transform: translateY(-100%);
   }
@@ -220,5 +236,13 @@ main {
   .mobile-nav.expanded .nav-links {
     display: flex;
     transform: translateY(0);
+  }
+
+  .user-management h2 {
+    height: 5rem;
+  }
+
+  .user-management .content {
+    padding: 0 1.5rem;
   }
 }

@@ -31,73 +31,78 @@ const UserManagement = () => {
       <section className="user-management">
         <h2>User Management</h2>
         <div className="content">
-          <table>
-            <thead>
-              <tr>
-                <td scope="col">Name</td>
-                <td scope="col">Username</td>
-                <td scope="col">Email</td>
-                <td scope="col">Phone</td>
-              </tr>
-              <tr>
-                <td scope="col">
-                  <button onClick={() => dispatch(toggleSort())}>
-                    {userState.sort === "nameDesc" ? (
-                      <ArrowDown />
-                    ) : (
-                      <ArrowUp />
-                    )}
-                  </button>
-                  <input
-                    type="text"
-                    placeholder="Search by Name"
-                    onChange={(e) => debounceFilter("name", e.target.value)}
-                  />
-                </td>
-                <td scope="col">
-                  <input
-                    type="text"
-                    placeholder="Search by Username"
-                    onChange={(e) => debounceFilter("username", e.target.value)}
-                  />
-                </td>
-                <td scope="col">
-                  <input
-                    type="text"
-                    placeholder="Search by Email"
-                    onChange={(e) => debounceFilter("email", e.target.value)}
-                  />
-                </td>
-                <td scope="col">
-                  <input
-                    type="text"
-                    placeholder="Search by Phone"
-                    onChange={(e) => debounceFilter("phone", e.target.value)}
-                  />
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {userState.users.length !== 0 ? (
-                userState.users.map((user) => (
-                  <tr>
-                    <td>{user.name}</td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                  </tr>
-                ))
-              ) : (
+          <div className="table-wrapper">
+            <table>
+              <thead>
                 <tr>
-                  <td>No Results</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td scope="col">
+                    Name{" "}
+                    <button onClick={() => dispatch(toggleSort())}>
+                      {userState.sort === "nameDesc" ? (
+                        <ArrowDown />
+                      ) : (
+                        <ArrowUp />
+                      )}
+                    </button>
+                  </td>
+                  <td scope="col">Username</td>
+                  <td scope="col">Email</td>
+                  <td scope="col">Phone</td>
                 </tr>
-              )}
-            </tbody>
-            <tfoot></tfoot>
-          </table>
+                <tr>
+                  <td scope="col">
+                    <input
+                      type="text"
+                      placeholder="Filter by Name"
+                      onChange={(e) => debounceFilter("name", e.target.value)}
+                    />
+                  </td>
+                  <td scope="col">
+                    <input
+                      type="text"
+                      placeholder="Filter by Username"
+                      onChange={(e) =>
+                        debounceFilter("username", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td scope="col">
+                    <input
+                      type="text"
+                      placeholder="Filter by Email"
+                      onChange={(e) => debounceFilter("email", e.target.value)}
+                    />
+                  </td>
+                  <td scope="col">
+                    <input
+                      type="text"
+                      placeholder="Filter by Phone"
+                      onChange={(e) => debounceFilter("phone", e.target.value)}
+                    />
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                {userState.users.length !== 0 ? (
+                  userState.users.map((user) => (
+                    <tr>
+                      <td scope="col">{user.name}</td>
+                      <td scope="col">{user.username}</td>
+                      <td scope="col">{user.email}</td>
+                      <td scope="col">{user.phone}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td scope="col">No Results</td>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </>
