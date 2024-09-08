@@ -148,6 +148,7 @@ main {
 }
 
 .user-management table {
+  overflow: hidden;
   width: 100%;
   border-spacing: 0;
   border: 1px solid #d7d9de;
@@ -165,7 +166,7 @@ main {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .user-management thead td {
@@ -186,6 +187,7 @@ main {
   background-color: #ffffff;
   border: 1px solid #d7d9de;
   border-radius: 0.25rem;
+  color: #000;
   cursor: pointer;
 }
 
@@ -240,6 +242,7 @@ main {
 
   .user-management h2 {
     height: 5rem;
+    font-size: 1.25rem;
   }
 
   .user-management .content {

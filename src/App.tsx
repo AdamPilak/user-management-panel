@@ -6,8 +6,8 @@ import Navigation from "./components/Navigation";
 const App = () => {
   return (
     <>
-      <Navigation className="desktop-nav" expaneded={true} />
-      <Navigation className="mobile-nav" expaneded={false} />
+      <Navigation className="desktop-nav" expaneded={true} type="Desktop" />
+      <Navigation className="mobile-nav" expaneded={false} type="Mobile" />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

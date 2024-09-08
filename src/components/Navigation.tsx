@@ -5,9 +5,10 @@ import { Link, useLocation } from "react-router-dom";
 type Props = {
   className: string;
   expaneded: boolean;
+  type: "Desktop" | "Mobile";
 };
 
-const Navigation = ({ className, expaneded }: Props) => {
+const Navigation = ({ className, expaneded, type }: Props) => {
   const [isExpanded, setIsExpanded] = useState(expaneded);
   const location = useLocation();
 
@@ -29,6 +30,7 @@ const Navigation = ({ className, expaneded }: Props) => {
         <Link
           to="/"
           className={`nav-link ${location.pathname === "/" ? "selected" : ""}`}
+          onClick={type === "Mobile" ? () => setIsExpanded(false) : undefined}
         >
           <House /> Home
         </Link>
@@ -37,6 +39,7 @@ const Navigation = ({ className, expaneded }: Props) => {
           className={`nav-link ${
             location.pathname === "/user-management" ? "selected" : ""
           }`}
+          onClick={type === "Mobile" ? () => setIsExpanded(false) : undefined}
         >
           <UserCog /> User Management
         </Link>
