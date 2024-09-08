@@ -64,10 +64,6 @@ nav .logo {
   color: white;
 }
 
-.desktop-nav {
-  min-width: 240px;
-}
-
 .desktop-nav .logo {
   display: none;
 }
@@ -127,6 +123,10 @@ nav .nav-link.selected::before {
   width: 2px;
   background-color: #07009c;
   height: 100%;
+}
+
+.desktop-nav.expanded {
+  min-width: 240px;
 }
 
 .desktop-nav.expanded .logo {
