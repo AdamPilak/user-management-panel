@@ -21,6 +21,19 @@ html {
   background-color: #f2f3f5;
 }
 
+/* Sections */
+section h2 {
+  height: 5.5rem;
+  display: flex;
+  align-items: center;
+  padding-left: 2.5rem;
+  font-weight: normal;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+/* Navigation */
 nav {
   position: relative;
   display: flex;
@@ -120,22 +133,12 @@ main {
   width: 100%;
 }
 
+/* User Management */
 .user-management {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   padding-bottom: 2rem;
-}
-
-.user-management h2 {
-  height: 5.5rem;
-  display: flex;
-  align-items: center;
-  padding-left: 2.5rem;
-  font-weight: normal;
-  background-color: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .user-management .content {
@@ -164,9 +167,20 @@ main {
 
 .user-management thead tr:first-child td:first-child {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   gap: 1.5rem;
+}
+
+.user-management thead tr:first-child td:first-child div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-management thead tr:first-child td:first-child .lucide-loader-circle {
+  animation: rotate 0.5s infinite linear;
 }
 
 .user-management thead td {
@@ -204,7 +218,9 @@ main {
   background: #f9fafc;
 }
 
+/* BreakPoints */
 @media (max-width: 1200px) {
+  /* User Management */
   .user-management td {
     padding: 1rem;
   }
@@ -215,6 +231,13 @@ main {
     flex-direction: column;
   }
 
+  /* Sections */
+  section h2 {
+    height: 5rem;
+    font-size: 1.25rem;
+  }
+
+  /* Navigation */
   nav header {
     height: 5rem;
   }
@@ -240,12 +263,18 @@ main {
     transform: translateY(0);
   }
 
-  .user-management h2 {
-    height: 5rem;
-    font-size: 1.25rem;
-  }
-
+  /* User Management */
   .user-management .content {
     padding: 0 1.5rem;
+  }
+}
+
+/* Keyframes */
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

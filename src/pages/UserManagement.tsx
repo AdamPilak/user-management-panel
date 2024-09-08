@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../state/store";
 import { useEffect } from "react";
 import { fetchUsers, setFilters, toggleSort } from "../state/user/userSlice";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp, LoaderCircle } from "lucide-react";
 
 const UserManagement = () => {
   const userState = useSelector((state: RootState) => state.user);
@@ -36,14 +36,17 @@ const UserManagement = () => {
               <thead>
                 <tr>
                   <td scope="col">
-                    Name{" "}
-                    <button onClick={() => dispatch(toggleSort())}>
-                      {userState.sort === "nameDesc" ? (
-                        <ArrowDown />
-                      ) : (
-                        <ArrowUp />
-                      )}
-                    </button>
+                    Name
+                    <div>
+                      {userState.loading && <LoaderCircle />}
+                      <button onClick={() => dispatch(toggleSort())}>
+                        {userState.sort === "nameDesc" ? (
+                          <ArrowDown />
+                        ) : (
+                          <ArrowUp />
+                        )}
+                      </button>
+                    </div>
                   </td>
                   <td scope="col">Username</td>
                   <td scope="col">Email</td>
@@ -83,7 +86,7 @@ const UserManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {userState.users.length !== 0 ? (
+                {userState.users.length > 0 ? (
                   userState.users.map((user) => (
                     <tr>
                       <td scope="col">{user.name}</td>
