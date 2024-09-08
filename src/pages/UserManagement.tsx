@@ -86,9 +86,16 @@ const UserManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {userState.users.length > 0 ? (
+                {userState.error ? (
+                  <tr>
+                    <td scope="col">Error Fetching Users</td>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                    <td scope="col"></td>
+                  </tr>
+                ) : userState.users.length > 0 ? (
                   userState.users.map((user) => (
-                    <tr>
+                    <tr key={user.username}>
                       <td scope="col">{user.name}</td>
                       <td scope="col">{user.username}</td>
                       <td scope="col">{user.email}</td>

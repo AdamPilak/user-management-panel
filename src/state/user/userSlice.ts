@@ -61,9 +61,13 @@ const initialState: UserState = {
 export const fetchUsers = createAsyncThunk(
   "user/fetchUsers",
   async (filters: UserFilters) => {
-    const users: UserType[] = await fetch(
-      "https://jsonplaceholder.typicode.com/users"
-    ).then((response) => response.json());
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+
+    if (!response.ok) {
+      throw new Error("Error Fetching Users");
+    }
+
+    const users = await response.json();
 
     const filteredUsers = filterUsers(users, filters);
 
@@ -148,12 +152,14 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
+        console.log("fulfilled");
         state.loading = false;
         state.users = action.payload;
         sortUsers(state);
         state.error = "";
       })
       .addCase(fetchUsers.rejected, (state, action) => {
+        console.log("rejected");
         state.loading = false;
         state.users = [];
         state.error = action.error.message || "Something went wrong";
